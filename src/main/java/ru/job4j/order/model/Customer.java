@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,4 +23,12 @@ public class Customer {
     private String name;
     private int phone;
     private int money;
+
+    @ManyToOne
+    @JoinColumn(name = "card_id", foreignKey = @ForeignKey(name = "CARD_ID_FK"))
+    private Card card;
+
+    @OneToMany
+    @JoinColumn
+    private List<Order> order = new ArrayList<>();
 }
