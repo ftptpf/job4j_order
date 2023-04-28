@@ -28,7 +28,6 @@ public class Customer {
     @JoinColumn(name = "card_id", foreignKey = @ForeignKey(name = "CARD_ID_FK"))
     private Card card;
 
-    @OneToMany
-    @JoinColumn
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> order = new ArrayList<>();
 }
