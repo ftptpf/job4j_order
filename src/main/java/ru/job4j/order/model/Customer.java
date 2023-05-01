@@ -28,6 +28,16 @@ public class Customer {
     @JoinColumn(name = "card_id", foreignKey = @ForeignKey(name = "CARD_ID_FK"))
     private Card card;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> order = new ArrayList<>();
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
+
+    public void addOrder(Order order) {
+        orders.add(order);
+        order.setCustomer(this);
+    }
+
+    public void removeOrder(Order order) {
+        orders.remove(order);
+        order.setCustomer(null);
+    }
 }

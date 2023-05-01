@@ -22,4 +22,8 @@ public class Order {
     private int cost;
     private boolean status;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
 }
