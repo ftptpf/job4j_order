@@ -6,6 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +23,16 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
+
+    @NotBlank(message = "Name can't be null or whitespace!")
     private String name;
+
+    @NotNull(message = "Phone number can't be null!")
+    @PositiveOrZero(message = "Phone number must be a positive number or 0!")
     private int phone;
+
+    @NotNull(message = "Money quantity can't be null!")
+    @PositiveOrZero(message = "Money quantity must be a positive number or 0!")
     private int money;
 
     @ManyToOne

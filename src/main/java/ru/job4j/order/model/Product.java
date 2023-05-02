@@ -6,6 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 @Data
@@ -18,6 +21,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
+
+    @NotBlank(message = "Product name can't be null or whitespace!")
     private String name;
+
+    @NotNull(message = "Product cost can't be null!")
+    @PositiveOrZero(message = "Product cost must be a positive number or 0!")
     private int cost;
 }

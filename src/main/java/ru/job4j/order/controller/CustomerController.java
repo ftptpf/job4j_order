@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import ru.job4j.order.model.Card;
 import ru.job4j.order.model.Customer;
 import ru.job4j.order.model.Order;
 import ru.job4j.order.service.CardService;
@@ -30,13 +31,16 @@ public class CustomerController {
 
     @PutMapping("/buy-card/{cardId}")
     public ResponseEntity<?> buyCard(@RequestBody Customer customer, @PathVariable Integer cardId) {
-        customerService.findById(customer.getId()).orElseThrow(
+        Customer customerFromDb = customerService.findById(customer.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found")
         );
-        cardService.findById(cardId).orElseThrow(
+        Card card = cardService.findById(cardId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Card not found")
         );
-        return null;
+        customerFromDb.setMoney(customerFromDb.getMoney() - card.getCost());
+        customerFromDb.setCard(card);
+        customerService.save(customerFromDb);
+        return ResponseEntity.ok("The client has successfully purchased the card");
     }
 
     @GetMapping("/check-order-status/{id}")

@@ -6,6 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 @Data
@@ -18,6 +21,15 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
+
+    @NotBlank(message = "Card name can't be null or whitespace!")
     private String name;
+
+    @NotNull(message = "Card discount can't be null!")
+    @PositiveOrZero(message = "Discount must be a positive number or 0!")
     private int discount;
+
+    @NotNull(message = "Card cost can't be null!")
+    @PositiveOrZero(message = "Card cost must be a positive number or 0!")
+    private int cost;
 }

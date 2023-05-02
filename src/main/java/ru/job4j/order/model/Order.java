@@ -6,6 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 @Data
@@ -18,8 +21,14 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
+
+    @NotBlank(message = "Description can't be null or whitespace!")
     private String description;
+
+    @NotNull(message = "Order cost can't be null!")
+    @PositiveOrZero(message = "Order cost must be a positive number or 0!")
     private int cost;
+
     private boolean status;
 
     @ManyToOne
