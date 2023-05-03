@@ -28,4 +28,8 @@ public class Product {
     @NotNull(message = "Product cost can't be null!")
     @PositiveOrZero(message = "Product cost must be a positive number or 0!")
     private int cost;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 }

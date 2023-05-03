@@ -17,6 +17,10 @@ public class CustomerService {
         return customerRepository.findById(id);
     }
 
+    public Optional<Customer> findByPhone(Integer phone) {
+        return customerRepository.findByPhone(phone);
+    }
+
     public Customer save(Customer customer) {
         return customerRepository.save(customer);
     }

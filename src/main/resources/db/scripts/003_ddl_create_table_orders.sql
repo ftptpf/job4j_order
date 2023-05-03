@@ -11,3 +11,4 @@ COMMENT ON COLUMN orders.id IS 'Идентификатор заказа';
 COMMENT ON COLUMN orders.description IS 'Описание заказа';
 COMMENT ON COLUMN orders.cost IS 'Стоимость заказа';
 COMMENT ON COLUMN orders.status IS 'Статус заказа';
+COMMENT ON COLUMN orders.customer_id IS 'Идентификатор клиента который создал заказ';
