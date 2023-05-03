@@ -1,3 +1,4 @@
-INSERT INTO cards(name, discount) VALUES ('Basic', 5);
-INSERT INTO cards(name, discount) VALUES ('Standard', 10);
-INSERT INTO cards(name, discount) VALUES ('Super', 20);
+INSERT INTO cards(name, discount, cost) VALUES ('Zero', 0, 0);
+INSERT INTO cards(name, discount, cost) VALUES ('Basic', 5, 50);
+INSERT INTO cards(name, discount, cost) VALUES ('Standard', 10, 100);
+INSERT INTO cards(name, discount, cost) VALUES ('Super', 20, 150);

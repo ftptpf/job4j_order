@@ -27,10 +27,14 @@ public class CustomerController {
         Card card = cardService.findById(cardId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Card not found")
         );
-        customerFromDb.setMoney(customerFromDb.getMoney() - card.getCost());
+        int money = customerFromDb.getMoney() - card.getCost();
+        if (money < 0) {
+            return ResponseEntity.badRequest().body("Customer doesn't have enough money for by card");
+        }
+        customerFromDb.setMoney(money);
         customerFromDb.setCard(card);
         customerService.save(customerFromDb);
-        return ResponseEntity.ok("The client has successfully purchased the card");
+        return ResponseEntity.ok("The customer has successfully purchased the card");
     }
 
 }

@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS customers (
     name TEXT NOT NULL ,
     phone INTEGER UNIQUE NOT NULL ,
     money INTEGER DEFAULT 0 CHECK ( money >= 0 ) ,
-    card_id INTEGER REFERENCES cards(id)
+    card_id INTEGER REFERENCES cards(id) DEFAULT 1
 );
 
 COMMENT ON TABLE customers IS 'Клиенты';
