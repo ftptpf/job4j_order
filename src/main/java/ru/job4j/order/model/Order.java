@@ -10,7 +10,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Data
@@ -38,16 +40,20 @@ public class Order {
     private Customer customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products = new ArrayList<>();
+    private List<OrderProduct> products = new ArrayList<>();
 
     public void addProduct(Product product) {
-        products.add(product);
-        product.setOrder(this);
+        OrderProduct orderProduct = new OrderProduct(this, product);
+        products.add(orderProduct);
+        product.getOrders().add(orderProduct);
     }
 
     public void removeProduct(Product product) {
-        products.remove(product);
-        product.setOrder(null);
+        OrderProduct orderProduct = new OrderProduct(this, product);
+        product.getOrders().remove(orderProduct);
+        products.remove(orderProduct);
+        orderProduct.setOrder(null);
+        orderProduct.setProduct(null);
     }
 
 }
