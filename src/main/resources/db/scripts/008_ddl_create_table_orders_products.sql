@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS orders_products (
-    order_id INTEGER REFERENCES customers ,
-    product_id INTEGER REFERENCES orders ,
+    order_id INTEGER REFERENCES orders ,
+    product_id INTEGER REFERENCES products ,
     PRIMARY KEY (order_id, product_id)
 );
 
