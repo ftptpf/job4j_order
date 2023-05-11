@@ -17,12 +17,4 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    /**
-     * TODO
-     * change to array id
-     */
-    public int sum(int id) {
-        return productRepository.sum(id);
-    }
-
 }
