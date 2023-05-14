@@ -8,7 +8,7 @@ import ru.job4j.order.model.Dish;
 @Repository
 public class DishRepository {
 
-    @Value("${api-url}")
+    @Value("${dishes.api.url}")
     private String url;
 
     private final RestTemplate client;

@@ -9,8 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
@@ -33,25 +31,12 @@ public class Order {
 
     private boolean status;
 
+    @NotNull(message = "Dish id can't be null!")
+    @PositiveOrZero(message = "Dish id must be a positive number or 0!")
+    private int dishId;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderProduct> products = new ArrayList<>();
-
-    public void addProduct(Product product) {
-        OrderProduct orderProduct = new OrderProduct(this, product);
-        products.add(orderProduct);
-        product.getOrders().add(orderProduct);
-    }
-
-    public void removeProduct(Product product) {
-        OrderProduct orderProduct = new OrderProduct(this, product);
-        product.getOrders().remove(orderProduct);
-        products.remove(orderProduct);
-        orderProduct.setOrder(null);
-        orderProduct.setProduct(null);
-    }
 
 }

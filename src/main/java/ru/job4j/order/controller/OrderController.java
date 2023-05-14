@@ -6,7 +6,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import ru.job4j.order.dto.OrderDto;
+import ru.job4j.order.model.Dish;
 import ru.job4j.order.model.Order;
+import ru.job4j.order.service.DishService;
 import ru.job4j.order.service.OrderService;
 
 import javax.validation.Valid;
@@ -17,6 +20,7 @@ import javax.validation.Valid;
 public class OrderController {
 
     private final OrderService orderService;
+    private final DishService dishService;
 
     @PostMapping("/create")
     public ResponseEntity<?> createOrder(@Valid @RequestBody Order order) {
@@ -33,6 +37,19 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(body);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOrderDto(@PathVariable int id) {
+        OrderDto orderDto = new OrderDto();
+        Order order = orderService.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
+        orderDto.setOrder(order);
+        Dish dish = dishService.findById(order.getDishId());
+        orderDto.setDish(dish);
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(orderDto);
     }
 
 }
