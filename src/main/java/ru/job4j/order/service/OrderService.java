@@ -3,6 +3,7 @@ package ru.job4j.order.service;
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import ru.job4j.order.dto.OrderToKitchenDto;
 import ru.job4j.order.model.Order;
 import ru.job4j.order.repository.OrderRepository;
 
@@ -17,7 +18,8 @@ public class OrderService {
 
     public Order save(Order order) {
         Order savedOrder = orderRepository.save(order);
-        kafkaTemplate.send("job4j_orders", savedOrder);
+        OrderToKitchenDto orderToKitchenDto = new OrderToKitchenDto(savedOrder.getId(), savedOrder.getDishId());
+        kafkaTemplate.send("job4j_orders", orderToKitchenDto);
         return savedOrder;
     }
 
