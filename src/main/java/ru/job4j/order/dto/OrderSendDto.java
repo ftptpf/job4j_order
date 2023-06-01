@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderToKitchenDto {
+public class OrderSendDto {
     private int id;
     private int dishId;
 }
