@@ -13,18 +13,18 @@ import java.util.Optional;
 @AllArgsConstructor
 public class OrderService {
 
-    private final OrderRepository orderRepository;
+    private final OrderRepository repository;
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public Order save(Order order) {
-        Order savedOrder = orderRepository.save(order);
+        Order savedOrder = repository.save(order);
         OrderSendDto orderSendDto = new OrderSendDto(savedOrder.getId(), savedOrder.getDishId());
-        kafkaTemplate.send("job4j_orders", orderSendDto);
+        kafkaTemplate.send("preorder", orderSendDto);
         kafkaTemplate.send("messengers", orderSendDto);
         return savedOrder;
     }
 
     public Optional<Order> findById(Integer id) {
-        return orderRepository.findById(id);
+        return repository.findById(id);
     }
 }
